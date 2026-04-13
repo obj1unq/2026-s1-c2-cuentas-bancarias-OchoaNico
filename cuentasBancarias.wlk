@@ -49,3 +49,45 @@ object cuentaConGastos {
     }
 
 }
+
+object cuentaCombinada {
+    
+    var cuentaPrimaria = null
+    var cuentaSecundaria = null
+
+
+    method cuentaPrimaria(nuevaCuenta){
+        cuentaPrimaria = nuevaCuenta
+    }
+
+    method cuentaSecundaria(nuevaCuenta){
+        cuentaSecundaria = nuevaCuenta
+    }
+
+    method añadirImporte(cantidadAAñadir){
+        cuentaPrimaria.añadirImporte(cantidadAAñadir)
+    }
+
+    method extraerImporte(cantidadAExtraer){
+        const saldoCuentaPrimaria = cuentaPrimaria.saldoActual()
+        self.validarExtraccion(cantidadAExtraer)
+        
+        if (saldoCuentaPrimaria >= cantidadAExtraer){
+            cuentaPrimaria.extraerImporte(cantidadAExtraer)
+        } else {
+            cuentaPrimaria.extraerImporte(saldoCuentaPrimaria)
+            cuentaSecundaria.extraerImporte(cantidadAExtraer - saldoCuentaPrimaria)
+        }
+    }
+
+    method validarExtraccion(cantidadAExtraer){
+        if(self.saldoActual() < cantidadAExtraer){
+            self.error("No puede extraerse el monto deseado de la cuenta combinada")
+        }
+    }
+
+    method saldoActual(){
+        return cuentaPrimaria.saldoActual().max(0) + cuentaSecundaria.saldoActual().max(0)
+    }
+
+}
