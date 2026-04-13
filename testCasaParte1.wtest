@@ -7,16 +7,16 @@ describe "casa de pepe y julian, gastos y cuentas bancarias" {
       casa.asignarCuentaDeGastos(cuentaCorriente) //Arrange
       cuentaCorriente.añadirImporte(300) //Arrange
       casa.setGastoDelMes(0) //Arrange
-      casa.pagarGastoDe(200)
-      assert.equals(100, cuentaCorriente.saldoActual())
-      assert.equals(200, casa.gastosDelMes)
+      casa.pagarGastoDe(200) //Act
+      assert.equals(100, cuentaCorriente.saldoActual()) //Assert
+      assert.equals(200, casa.gastosDelMes()) //Assert
 
-      casa.pagarGastoDe(400)
-      assert.equals(-300, cuentaCorriente.saldoActual())
-      assert.equals(600, casa.gastosDelMes)
+      casa.pagarGastoDe(400)//Act
+      assert.equals(-300, cuentaCorriente.saldoActual())//Assert
+      assert.equals(600, casa.gastosDelMes())//Assert
 
-      casa.siguienteMes()
-      assert.equals(0, casa.gastosDelMes)
+      casa.siguienteMes()//Act
+      assert.equals(0, casa.gastosDelMes())//Assert
 
     }
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
