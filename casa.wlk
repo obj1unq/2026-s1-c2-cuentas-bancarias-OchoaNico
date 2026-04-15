@@ -1,9 +1,15 @@
+import estrategiasDeMantenimiento.*
+
 object casa {
     var gastosDelMes = 0
+    var estrategia = ninguna
     var cuentaDePagos = null
     var costoDeReparacion = 0
     var cantidadDeViveres = 0
 
+    method asignarEstrategia(nuevaEstrategia) {
+        estrategia = nuevaEstrategia
+    }
 
     method costoDeReparacion(){
         return costoDeReparacion
@@ -46,6 +52,10 @@ object casa {
         costoDeReparacion = 0
     }
 
+    method puedeReparar(){
+        return(cuentaDePagos.saldoActual() >= costoDeReparacion)
+    }
+
     method hayQueReparar(){
         return costoDeReparacion > 0
     }
@@ -68,6 +78,7 @@ object casa {
     }
 
     method siguienteMes(){
+        estrategia.realizarMantenimiento(self)
         gastosDelMes = 0
     }
 

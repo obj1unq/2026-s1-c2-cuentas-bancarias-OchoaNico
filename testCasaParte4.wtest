@@ -1,5 +1,6 @@
 import casa.*
 import cuentasBancarias.*
+import estrategiasDeMantenimiento.*
 
 describe "casa de pepe y julian, estrategias de mantenimiento"{
 
@@ -10,7 +11,7 @@ describe "casa de pepe y julian, estrategias de mantenimiento"{
         cuentaCombinada.cuentaPrimaria(cuentaConGastos)
         cuentaConGastos.setCostoDeOperacion(20)
         cuentaCombinada.cuentaSecundaria(cuentaCorriente)
-        minimoEIndispensable.calidadDeViveres(3)
+        minimoEIndispensable.asignarCalidadDeViveres(3)
         casa.asignarEstrategia(minimoEIndispensable)
         
         assert.throwsException({casa.siguienteMes()})
