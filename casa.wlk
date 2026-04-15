@@ -25,7 +25,7 @@ object casa {
     }
 
     method validarCompraDeViveres(porcentaje){
-        if (100 < self.porcentajeDeViveres()){
+        if (100 < (self.porcentajeDeViveres() + porcentaje)){
             self.error("La compra excede la capacidad de viveres maxima")
         }
     }
