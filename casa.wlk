@@ -20,7 +20,6 @@ object casa {
     method comprarViveres(porcentaje, calidad){
         self.validarCompraDeViveres(porcentaje)
         self.pagarGastoDe(calidad * porcentaje)
-        gastosDelMes = gastosDelMes + (calidad * porcentaje)
         cantidadDeViveres = cantidadDeViveres + porcentaje
     }
 
