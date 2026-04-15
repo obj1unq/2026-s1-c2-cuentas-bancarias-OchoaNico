@@ -1,7 +1,52 @@
 object casa {
     var gastosDelMes = 0
     var cuentaDePagos = null
+    var costoDeReparacion = 0
+    var cantidadDeViveres = 0
 
+
+    method asignarViveres(cantidad){ //Uso exclusivo para tests
+        cantidadDeViveres = cantidad
+    }
+
+    method hayViveresSuficientes(){
+        return cantidadDeViveres >= 40
+    }
+
+    method estaEnOrden(){
+        return self.hayViveresSuficientes() && not(self.hayQueReparar())
+    }
+
+    method comprarViveres(porcentaje, calidad){
+        self.validarCompraDeViveres(porcentaje)
+        self.pagarGastoDe(calidad * porcentaje)
+        gastosDelMes = gastosDelMes + (calidad * porcentaje)
+        cantidadDeViveres = cantidadDeViveres + porcentaje
+    }
+
+    method validarCompraDeViveres(porcentaje){
+        if (100 < self.porcentajeDeViveres()){
+            self.error("La compra excede la capacidad de viveres maxima")
+        }
+    }
+
+    method porcentajeDeViveres(){
+        return cantidadDeViveres
+    }
+
+    method dañosPorUnMontoDe(montoDeReparacion){
+        costoDeReparacion = costoDeReparacion + montoDeReparacion
+    }
+
+    method realizarReparaciones (){
+        self.pagarGastoDe(costoDeReparacion)
+        gastosDelMes = gastosDelMes + costoDeReparacion
+        costoDeReparacion = 0
+    }
+
+    method hayQueReparar(){
+        return costoDeReparacion > 0
+    }
 
     method setGastoDelMes(cantidadDeGastos) {
         gastosDelMes = cantidadDeGastos

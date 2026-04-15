@@ -1,0 +1,37 @@
+import casa.*
+import cuentasBancarias.*
+
+describe "casa de pepe y julian, compra de viveres y reparaciones"{
+
+    test "Prueba de viveres y reparaciones" {
+        casa.asignarViveres(30)
+        casa.asignarCuentaDeGastos(cuentaCorriente)
+        cuentaCorriente.añadirImporte(2000)
+        assert.equals(false, casa.hayQueReparar())
+
+        casa.dañosPorUnMontoDe(1000)
+        assert.equals(false, casa.hayViveresSuficientes())
+        assert.equals(true, casa.hayQueReparar())
+        assert.equals(false, casa.estaEnOrden())
+
+        assert.throwsException({casa.comprarViveres(80, 2)})
+        assert.equals(30, casa.porcentajeDeViveres())
+        assert.equals(2000, cuentaCorriente.saldoActual())
+        assert.equals(0, casa.gastosDelMes())
+
+        casa.comprarViveres(20,2)
+        assert.equals(true, casa.hayViveresSuficientes())
+        assert.equals(50, casa.porcentajeDeViveres())
+        assert.equals(false, casa.estaEnOrden())
+        assert.equals(1960, cuentaCorriente.saldoActual())
+        assert.equals(40, casa.gastosDelMes())
+
+        casa.realizarReparaciones()
+        assert.equals(false, casa.hayQueReparar())
+        assert.equals(true, casa.estaEnOrden())
+        assert.equals(960, cuentaCorriente.saldoActual())
+        assert.equals(1040, casa.gastosDelMes())
+    }
+
+
+}
