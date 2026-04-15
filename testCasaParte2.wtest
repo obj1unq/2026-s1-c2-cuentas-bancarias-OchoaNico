@@ -1,0 +1,71 @@
+import casa.*
+import cuentasBancarias.*
+
+
+
+describe "casa de pepe y julian, cuenta combinada" {
+
+    method iniciarCuentasYCasa(){
+        cuentaCombinada.cuentaPrimaria(cuentaConGastos)
+        cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+        casa.asignarCuentaDeGastos(cuentaCombinada)
+    }
+
+    test "Saldos de cuenta combinada 1"{
+
+        self.iniciarCuentasYCasa()
+        cuentaConGastos.añadirImporte(200)
+        cuentaCorriente.añadirImporte(50)
+        assert.equals(200, cuentaConGastos.saldoActual())
+        assert.equals(50, cuentaCorriente.saldoActual())
+        assert.equals(250, cuentaCombinada.saldoActual())
+    }
+
+    test "Saldos de cuenta combinada 2"{
+        self.iniciarCuentasYCasa()
+        cuentaConGastos.extraerImporte(50)
+        cuentaCorriente.añadirImporte(200)
+        assert.equals(-50, cuentaConGastos.saldoActual())
+        assert.equals(200, cuentaCorriente.saldoActual())
+        assert.equals(200, cuentaCombinada.saldoActual())
+    }
+    test "Saldos de cuenta combinada 3"{
+        self.iniciarCuentasYCasa()
+        cuentaConGastos.añadirImporte(150)
+        cuentaCorriente.extraerImporte(20)
+        assert.equals(150, cuentaConGastos.saldoActual())
+        assert.equals(-20, cuentaCorriente.saldoActual())
+        assert.equals(150, cuentaCombinada.saldoActual())
+    }
+
+    test "Saldos de cuenta combinada 4"{
+        self.iniciarCuentasYCasa()
+        cuentaConGastos.extraerImporte(40)
+        cuentaCorriente.extraerImporte(60)
+        assert.equals(-40, cuentaConGastos.saldoActual())
+        assert.equals(-60, cuentaCorriente.saldoActual())
+        assert.equals(0, cuentaCombinada.saldoActual())
+    }
+    
+    test "Gastos de cuenta combinada"{
+        self.iniciarCuentasYCasa()
+        cuentaConGastos.setCostoDeOperacion(20)
+        cuentaCorriente.añadirImporte(300)
+        cuentaCombinada.añadirImporte(100)
+        assert.equals(80, cuentaConGastos.saldoActual())
+        assert.equals(380, cuentaCombinada.saldoActual())
+
+        casa.pagarGastoDe(280)
+        assert.equals(280, casa.gastosDelMes())
+        assert.equals(100, cuentaCombinada.saldoActual())
+        assert.equals(0, cuentaConGastos.saldoActual())
+        assert.equals(100, cuentaCorriente.saldoActual())
+
+        assert.throwsException({cuentaCombinada.añadirImporte(10)})
+        assert.equals(100, cuentaCombinada.saldoActual())
+
+        assert.throwsException({casa.pagarGastoDe(1000)})
+        assert.equals(100, cuentaCombinada.saldoActual())
+        assert.equals(280, casa.gastosDelMes())
+    }
+}

@@ -1,7 +1,47 @@
+import cuentasBancarias.*
 import casa.*
 
-describe "casa de pepe y julian" {
+describe "casa de pepe y julian, gastos y cuentas bancarias" {
 
+    test "Cuenta corriente" {
+      casa.asignarCuentaDeGastos(cuentaCorriente) //Arrange
+      cuentaCorriente.añadirImporte(300) //Arrange
+      casa.setGastoDelMes(0) //Arrange
+      casa.pagarGastoDe(200) //Act
+      assert.equals(100, cuentaCorriente.saldoActual()) //Assert
+      assert.equals(200, casa.gastosDelMes()) //Assert
+
+      casa.pagarGastoDe(400)//Act
+      assert.equals(-300, cuentaCorriente.saldoActual())//Assert
+      assert.equals(600, casa.gastosDelMes())//Assert
+
+      casa.siguienteMes()//Act
+      assert.equals(0, casa.gastosDelMes())//Assert
+
+    }
+
+    test "Cuenta con gastos: caso normal"{
+      casa.asignarCuentaDeGastos(cuentaConGastos) //Arrange
+      cuentaConGastos.setCostoDeOperacion(20)//Arrange
+      cuentaConGastos.añadirImporte(1000) //Act
+      assert.equals(980, cuentaConGastos.saldoActual())//Assert
+
+      cuentaConGastos.extraerImporte(580)//Act
+      assert.equals(400, cuentaConGastos.saldoActual())//Assert
+
+      cuentaConGastos.extraerImporte(500)//Act
+      assert.equals(-100, cuentaConGastos.saldoActual())//Assert
+
+      cuentaConGastos.añadirImporte(150)//Act
+      assert.equals(30, cuentaConGastos.saldoActual())//Assert
+
+    }
+
+    test "Cuenta con gastos: caso excepcional"{
+      casa.asignarCuentaDeGastos(cuentaConGastos)//Arranger
+      cuentaConGastos.setCostoDeOperacion(20)//Arrange
+      assert.throwsException({cuentaConGastos.añadirImporte(10)})
+    }
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
   // method initialize() {
   // }
