@@ -1,7 +1,7 @@
 
 object ninguna {
   
-    method realizarMantenimiento(){
+    method realizarMantenimiento(casa){
 
     }
 
