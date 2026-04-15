@@ -39,7 +39,6 @@ object casa {
 
     method realizarReparaciones (){
         self.pagarGastoDe(costoDeReparacion)
-        gastosDelMes = gastosDelMes + costoDeReparacion
         costoDeReparacion = 0
     }
 
