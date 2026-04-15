@@ -1,0 +1,56 @@
+import casa.*
+import cuentasBancarias.*
+
+describe "casa de pepe y julian, estrategias de mantenimiento"{
+
+    test "Prueba de estrategia : minimo e indispensable" {
+        casa.asignarViveres(30)
+        casa.dañosPorUnMontoDe(100)
+        casa.asignarCuentaDeGastos(cuentaCombinada)
+        cuentaCombinada.cuentaPrimaria(cuentaConGastos)
+        cuentaConGastos.setCostoDeOperacion(20)
+        cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+        minimoEIndispensable.calidadDeViveres(3)
+        casa.asignarEstrategia(minimoEIndispensable)
+        
+        assert.throwsException({casa.siguienteMes()})
+        cuentaCombinada.añadirImporte(100)
+        casa.siguienteMes()
+        assert.equals(40, casa.porcentajeDeViveres())
+        assert.equals(100, casa.costoDeReparacion())
+        assert.equals(0, casa.gastosDelMes())
+        assert.equals(50, cuentaCombinada.saldoActual())
+    }
+
+    test "Prueba de estrategia : full"{
+        casa.asignarViveres(30)
+        casa.dañosPorUnMontoDe(100)
+        casa.asignarCuentaDeGastos(cuentaCorriente)
+        casa.asignarEstrategia(full)
+
+        casa.siguienteMes()
+        
+        assert.equals(40, casa.porcentajeDeViveres())
+        assert.equals(-50, cuentaCorriente.saldoActual())
+        assert.equals(100, casa.costoDeReparacion())
+
+        cuentaCorriente.añadirImporte(450)
+        assert.equals(400, cuentaCorriente.saldoActual())
+
+        casa.siguienteMes()
+        assert.equals(40, casa.porcentajeDeViveres())
+        assert.equals(300, cuentaCorriente.saldoActual())
+        assert.equals(0, casa.costoDeReparacion())
+
+        casa.siguienteMes()
+        assert.equals(100, casa.porcentajeDeViveres())
+        assert.equals(0, cuentaCorriente.saldoActual())
+
+        casa.siguienteMes()
+        assert.equals(100, casa.porcentajeDeViveres())
+        assert.equals(0, cuentaCorriente.saldoActual())
+
+    }
+
+
+}

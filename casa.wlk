@@ -5,6 +5,10 @@ object casa {
     var cantidadDeViveres = 0
 
 
+    method costoDeReparacion(){
+        return costoDeReparacion
+    }
+
     method asignarViveres(cantidad){ //Uso exclusivo para tests
         cantidadDeViveres = cantidad
     }
